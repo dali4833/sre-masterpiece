@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service-a-stable
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: service-a
+spec:
+  selector:
+    app: service-a
+  ports:
+  - port: {{ .Values.serviceA.port }}
+    targetPort: {{ .Values.serviceA.port }}
+    name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service-a-canary
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: service-a
+spec:
+  selector:
+    app: service-a
+  ports:
+  - port: {{ .Values.serviceA.port }}
+    targetPort: {{ .Values.serviceA.port }}
+    name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service-b-stable
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: service-b
+spec:
+  selector:
+    app: service-b
+  ports:
+  - port: {{ .Values.serviceB.port }}
+    targetPort: {{ .Values.serviceB.port }}
+    name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service-b-canary
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: service-b
+spec:
+  selector:
+    app: service-b
+  ports:
+  - port: {{ .Values.serviceB.port }}
+    targetPort: {{ .Values.serviceB.port }}
+    name: http
