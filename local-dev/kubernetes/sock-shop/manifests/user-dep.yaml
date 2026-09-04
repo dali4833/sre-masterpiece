@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: user
-        image: weaveworksdemos/user:0.4.7
+        image: ghcr.io/dali4833/sre-masterpiece/user:a678f5883723dced1fe52b57c4057c104e372386
         resources:
           limits:
             cpu: 300m
