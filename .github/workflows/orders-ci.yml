@@ -21,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up JDK 8
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -31,10 +31,11 @@ jobs:
         run: |
           cd local-dev/sock-shop/src/orders
           mvn clean package -DskipTests
-          echo "=== JAR files in target ==="
-          ls -la target/*.jar
-          echo "=== Copying JAR to docker context ==="
-          cp target/orders.jar docker/orders/ 2>/dev/null || cp target/*.jar docker/orders/
+          echo "=== Checking target folder ==="
+          ls -la target/
+          echo "=== Copying JAR ==="
+          cp target/*.jar docker/orders/
+          echo "=== Verifying ==="
           ls -la docker/orders/
 
       - name: Set up Docker Buildx
