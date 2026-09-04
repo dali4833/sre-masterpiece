@@ -21,6 +21,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Build with Maven
+        run: |
+          cd local-dev/sock-shop/src/shipping
+          mvn clean package -DskipTests
+          find target -name "*.jar" -type f
+          # Copy JAR to docker context
+          cp target/*.jar docker/shipping/
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
