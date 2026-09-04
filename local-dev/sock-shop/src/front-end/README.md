@@ -72,7 +72,7 @@ Then you can run the tests with:
 ```
 make e2e
 ```
-
+Test CI/CD pipeline
 # Run
 
 ## Node
