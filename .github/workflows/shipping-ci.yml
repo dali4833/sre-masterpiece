@@ -1,0 +1,54 @@
+name: Shipping CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'local-dev/sock-shop/src/shipping/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/shipping
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: local-dev/sock-shop/src/shipping
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Update manifest
+        run: |
+          cd local-dev/kubernetes/sock-shop/manifests
+          sed -i "s|image: weaveworksdemos/shipping:.*|image: ghcr.io/${{ github.repository }}/shipping:${{ github.sha }}|g" shipping-dep.yaml
+
+      - name: Commit and push manifest update
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add local-dev/kubernetes/sock-shop/manifests/shipping-dep.yaml
+          git commit -m "Update shipping image to ${{ github.sha }}"
+          git push
