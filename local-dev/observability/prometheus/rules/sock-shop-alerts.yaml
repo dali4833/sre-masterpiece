@@ -1,0 +1,46 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: sock-shop-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+  - name: sock-shop-health
+    rules:
+    - alert: SockShopPodDown
+      expr: up{namespace="sock-shop"} == 0
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Sock Shop pod {{ $labels.pod }} is DOWN"
+        description: "The pod {{ $labels.pod }} in namespace sock-shop has been down for more than 2 minutes"
+    
+    - alert: SockShopHighMemory
+      expr: container_memory_usage_bytes{namespace="sock-shop"} > 500000000
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "{{ $labels.pod }} using high memory"
+        description: "{{ $labels.pod }} is using more than 500MB of memory"
+
+    - alert: SockShopHighCPU
+      expr: rate(container_cpu_usage_seconds_total{namespace="sock-shop"}[5m]) > 0.5
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "{{ $labels.pod }} using high CPU"
+        description: "{{ $labels.pod }} CPU usage is above 50%"
+    
+    - alert: SockShopRestarts
+      expr: increase(kube_pod_container_status_restarts_total{namespace="sock-shop"}[1h]) > 5
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "{{ $labels.pod }} restarting too much"
+        description: "{{ $labels.pod }} has restarted more than 5 times in the last hour"
