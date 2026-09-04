@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: orders
-        image: weaveworksdemos/orders:0.4.7
+        image: ghcr.io/dali4833/sre-masterpiece/orders:6ecf9c93be5f17080a36fe5f79c91dbc64d269ce
         env:
          - name: JAVA_OPTS
            value: -Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
