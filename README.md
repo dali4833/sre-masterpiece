@@ -20,82 +20,82 @@ Production-grade SRE platform built with modern DevOps practices. Currently runn
 - ✅ **GitOps Workflow** - Auto-deploy on git push
 
 ## 🏗️ Architecture
+
+```text
 Developer → VS Code → Git Push → GitHub → ArgoCD → Kubernetes (k3d)
-↓
-Sock Shop (11 services)
-↓
-Prometheus → Grafana
-↓
-Loki
+                                                    ↓
+                                              Sock Shop (11 services)
+                                                    ↓
+                                            Prometheus → Grafana
+                                                    ↓
+                                                  Loki
 
-text
 
-## 📂 Project Structure
-sre-masterpiece/
+                                                  sre-masterpiece/
 ├── local-dev/
-│ ├── kubernetes/
-│ │ └── sock-shop/
-│ │ └── manifests/ # K8s deployment manifests
-│ ├── sock-shop/
-│ │ ├── microservices-demo/ # Deployment configs
-│ │ └── src/ # Source code (7 microservices)
-│ ├── observability/
-│ │ ├── prometheus/
-│ │ │ └── rules/ # Alert rules
-│ │ ├── grafana/
-│ │ └── loki/
-│ └── gitops/
-│ └── argocd/
-│ └── applications/ # ArgoCD app definitions
-├── aws/ # AWS configs (coming)
-├── azure/ # Azure configs (coming)
-├── gcp/ # GCP configs (coming)
-├── ci-cd/ # CI/CD pipelines
-└── security/ # Security configs
+│   ├── kubernetes/
+│   │   └── sock-shop/
+│   │       └── manifests/         # K8s deployment manifests
+│   ├── sock-shop/
+│   │   ├── microservices-demo/    # Deployment configs
+│   │   └── src/                   # Source code (7 microservices)
+│   ├── observability/
+│   │   ├── prometheus/
+│   │   │   └── rules/            # Alert rules
+│   │   ├── grafana/
+│   │   └── loki/
+│   └── gitops/
+│       └── argocd/
+│           └── applications/      # ArgoCD app definitions
+├── aws/                           # AWS configs (coming)
+├── azure/                         # Azure configs (coming)
+├── gcp/                           # GCP configs (coming)
+├── ci-cd/                         # CI/CD pipelines
+└── security/                      # Security configs
 
 
-## 🛠️ Technology Stack
+🛠️ Technology Stack
+Category	Tools
+Orchestration	Kubernetes (k3d)
+Application	Sock Shop (Weaveworks)
+GitOps	ArgoCD
+Monitoring	Prometheus + Grafana
+Logging	Loki
+Version Control	Git + GitHub
+Container Runtime	Docker
 
-| Category | Tools |
-|----------|-------|
-| **Orchestration** | Kubernetes (k3d) |
-| **Application** | Sock Shop (Weaveworks) |
-| **GitOps** | ArgoCD |
-| **Monitoring** | Prometheus + Grafana |
-| **Logging** | Loki |
-| **Version Control** | Git + GitHub |
-| **Container Runtime** | Docker |
 
-## 🚀 Quick Start
+🚀 Quick Start
+Prerequisites
+Docker
 
-### Prerequisites
-- Docker
-- k3d
-- kubectl
-- Helm
+k3d
 
-### Setup Steps
+kubectl
 
-1. **Create Cluster**
-```bash
+Helm
+
+Setup Steps
+1. Create Cluster
+
+bash
 k3d cluster create sre-masterpiece --agents 2
-
-Deploy Sock Shop
+2. Deploy Sock Shop
 
 bash
 kubectl create namespace sock-shop
 kubectl apply -f local-dev/kubernetes/sock-shop/manifests -n sock-shop
-Access ArgoCD
+3. Access ArgoCD
 
 bash
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 # Open https://localhost:8080
-Access Sock Shop
+4. Access Sock Shop
 
 bash
 kubectl port-forward svc/front-end -n sock-shop 8079:80
 # Open http://localhost:8079
-Access Grafana
+5. Access Grafana
 
 bash
 kubectl port-forward svc/monitoring-grafana -n monitoring 3000:80
@@ -154,4 +154,4 @@ September 4, 2026
 
 text
 
-**Copy ALL of this, replace your README.md content, save, and push!** 🚀
+**Brother, copy EVERYTHING above (from `# 🚀 SRE Masterpiece` to the last line `[@dali4833](https://github.com/dali4833)`), replace your README.md, save, and push! 🚀**
