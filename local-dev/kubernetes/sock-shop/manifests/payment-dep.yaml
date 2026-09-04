@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: payment
-        image: weaveworksdemos/payment:0.4.3
+        image: ghcr.io/dali4833/sre-masterpiece/payment:c2a0ea4132851fd9595367bad15b046efc12404e
         resources:
           limits:
             cpu: 200m
