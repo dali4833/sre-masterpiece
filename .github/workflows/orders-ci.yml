@@ -31,12 +31,8 @@ jobs:
         run: |
           cd local-dev/sock-shop/src/orders
           mvn clean package -DskipTests
-          echo "=== Checking target folder ==="
-          ls -la target/
-          echo "=== Copying JAR ==="
-          cp target/*.jar docker/orders/
-          echo "=== Verifying ==="
-          ls -la docker/orders/
+          echo "=== JAR files ==="
+          find target -name "*.jar" -type f
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -51,7 +47,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: local-dev/sock-shop/src/orders/docker/orders
+          context: local-dev/sock-shop/src/orders
+          file: local-dev/sock-shop/src/orders/docker/orders/Dockerfile.github
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
