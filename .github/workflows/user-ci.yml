@@ -37,6 +37,7 @@ jobs:
           context: local-dev/sock-shop/src/user
           push: true
           tags: |
+          ghcr.io/${{ github.repository }}/user:v1.0.0
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
@@ -49,6 +50,6 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add user-dep.yaml
+          git add local-dev/kubernetes/sock-shop/manifests/user-dep.yaml
           git commit -m "Update user image to ${{ github.sha }}"
           git push
