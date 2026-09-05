@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: front-end
-        image: ghcr.io/dali4833/sre-masterpiece/front-end:d4ecf27eb36c7ab30cfe46a884f541812f17cee3
+        image: ghcr.io/dali4833/sre-masterpiece/front-end:v1.0.0
         resources:
           limits:
             cpu: 300m

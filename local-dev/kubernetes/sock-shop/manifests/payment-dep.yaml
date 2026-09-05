@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: payment
-        image: ghcr.io/dali4833/sre-masterpiece/payment:c2a0ea4132851fd9595367bad15b046efc12404e
+        image: ghcr.io/dali4833/sre-masterpiece/payment:v1.0.0
         resources:
           limits:
             cpu: 200m
