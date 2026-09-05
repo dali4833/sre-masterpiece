@@ -49,6 +49,6 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add local-dev/kubernetes/sock-shop/manifests/front-end-dep.yaml
+          git add front-end-dep.yaml
           git commit -m "Update front-end image to ${{ github.sha }}"
           git push
